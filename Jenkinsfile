@@ -67,12 +67,20 @@ node {
 	}
 	
 	stage ('CodeMerge') {
-    //Merge code only if Build succeeds...
+    	//Merge code only if Build succeeds...
     
-    if (buildSuccessPS == true && codeQualitySuccessPS == true && nexusSuccessPS == true && deploymentSuccessPS == true && buildSuccessPI == true && codeQualitySuccessPI == true && nexusSuccessPI == true && deploymentSuccessPI == true && buildSuccessUI == true && codeQualitySuccessUI == true && deploymentSuccessUI == true) 
-    {
-    echo 'CodeMerge can be done'
-    }
+	    if (buildSuccessPS == true && codeQualitySuccessPS == true && nexusSuccessPS == true && deploymentSuccessPS == true && buildSuccessPI == true && codeQualitySuccessPI == true && nexusSuccessPI == true && deploymentSuccessPI == true && buildSuccessUI == true && codeQualitySuccessUI == true && deploymentSuccessUI == true) 
+	    {
+	    //need to create service account and replace the following git config to docker image
+		sh 'git config --global user.email sowmiya.ranganathan@cognizant.com'
+		sh 'git config --global user.name SowmiyaRanganathan'
+
+		sh 'git checkout finalTest'
+		sh 'git pull origin finalTest'
+		//Takes current pull request branchName to merge
+		sh 'git merge origin/$branchName'
+		sh 'git push origin finalTest'
+	    }
     }
 	
 }

@@ -1,6 +1,4 @@
 env.dockerimagename="devopsbasservice/buildonframework:boins3"
-env.sparkServerQA="54.87.224.77"
-env.tomcatServerQA="35.153.180.19"
 node {
    stage ('Insight_PS_Build') {
         checkout scm
@@ -62,7 +60,9 @@ node {
 	
 	
 	stage ('Deployment_PUI2.0_App_QA_Tomcat') {
-		sh 'scp -r -o "StrictHostKeyChecking no" -i /var/jenkins/insights.pem /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0/app ec2-user@$env.tomcatServerQA:/var/lib/tomcat/webapps/app'
+		//sh 'ssh -f -i  /var/jenkins/insights.pem ec2-user@35.153.180.19  "systemctl stop tomcat"'
+		sh 'scp -r -o "StrictHostKeyChecking no" -i /var/jenkins/insights.pem /var/jenkins/jobs/$commitID/workspace/PlatformUI2.0/app ec2-user@35.153.180.19:/var/lib/tomcat/webapps/app'
+		//sh 'ssh -f -i  /var/jenkins/insights.pem ec2-user@35.153.180.19  "systemctl start tomcat"'  
 		deploymentSuccessUI=true
 	}
 	
@@ -71,15 +71,7 @@ node {
     
     if (buildSuccessPS == true && codeQualitySuccessPS == true && nexusSuccessPS == true && deploymentSuccessPS == true && buildSuccessPI == true && codeQualitySuccessPI == true && nexusSuccessPI == true && deploymentSuccessPI == true && buildSuccessUI == true && codeQualitySuccessUI == true && deploymentSuccessUI == true) 
     {
-		//need to create service account and replace the following git config to docker image
-		sh 'git config --global user.email sowmiya.ranganathan@cognizant.com'
-		sh 'git config --global user.name SowmiyaRanganathan'
-    
-		sh 'git checkout finalTest'
-		sh 'git pull origin finalTest'
-		//Takes current pull request branchName to merge
-		sh 'git merge origin/$branchName'
-		sh 'git push origin finalTest'
+    echo 'CodeMerge can be done'
     }
     }
 	

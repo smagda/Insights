@@ -16,7 +16,7 @@ node {
 		nexusSuccessPS=true
 	}
 	
-	stage ('Deployment_PS_QA'_Tomcat) {
+	stage ('Deployment_PS_QA_Tomcat') {
 		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformService && mvn tomcat7:undeploy -DskipTests'
 		sh 'cd /var/jenkins/jobs/$commitID/workspace/PlatformService && mvn tomcat7:redeploy -DskipTests'
 		deploymentSuccessPS=true

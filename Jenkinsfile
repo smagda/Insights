@@ -69,7 +69,7 @@ node {
 	stage ('CodeMerge') {
     //Merge code only if Build succeeds...
     
-    if (buildSuccessPS == true && codeQualitySuccessPS == true && nexusSuccessPS=true && deploymentSuccessPS == true && buildSuccessPI == true && codeQualitySuccessPI == true && nexusSuccessPI == true && deploymentSuccessPI == true && buildSuccessUI == true && codeQualitySuccessUI == true && deploymentSuccessUI == true) 
+    if (buildSuccessPS == true && codeQualitySuccessPS == true && nexusSuccessPS == true && deploymentSuccessPS == true && buildSuccessPI == true && codeQualitySuccessPI == true && nexusSuccessPI == true && deploymentSuccessPI == true && buildSuccessUI == true && codeQualitySuccessUI == true && deploymentSuccessUI == true) 
     {
     echo 'CodeMerge can be done'
     }
